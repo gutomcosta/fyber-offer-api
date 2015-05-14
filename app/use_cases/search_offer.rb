@@ -1,11 +1,10 @@
 class SearchOffer
 
-  def initialize(data)
-    raise ArgumentError, "missing search data" unless data_exists?(data) && is_valid?(data)
-    @data = data
+  def initialize
   end
 
-  def execute
+  def execute(data)
+    raise ArgumentError, "missing search data" unless data_exists?(data) && is_valid?(data)
     
   end
 
