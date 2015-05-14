@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-
+  root 'offers#index'
+  
   get 'offers/index'
 
   get 'offers/show'
