@@ -1,15 +1,14 @@
 class SearchOffer
 
-  def initialize(haskey_calculator, offer_url, http_request)
-    @calculator     = haskey_calculator
+  def initialize(offer_url, http_request)
     @offer_url      = offer_url
     @http_request   = http_request
   end
 
   def execute(data)
     raise ArgumentError, "missing search data" unless data_exists?(data) && is_valid?(data)
-    hashkey  = @calculator.calculate(data)
-    url      = @offer_url.build(data, hashkey)
+    param    = OfferParam.new(data)
+    url      = @offer_url.build(param.build)
     response = @http_request.request(url)
     Offer.build(response.offers)
 
