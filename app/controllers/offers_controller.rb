@@ -10,7 +10,9 @@ class OffersController < ApplicationController
     if form.valid? 
       use_case = SearchOffer.new({uid: form.uid, pub0: form.pub0, page: form.page})
       use_case.execute
+      render :nothing => true # just thinking about this...
+    else
+      redirect_to root_url
     end
-    render :nothing => true
   end
 end

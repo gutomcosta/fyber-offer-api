@@ -42,6 +42,17 @@ RSpec.describe OffersController, type: :controller do
           expect(use_case).to receive(:execute)
         end
       end
+
+      context "when validation fail" do 
+        before do 
+          allow(form).to receive(:valid?).and_return(false)
+          get :search, :offers => {"uid" => "player1", "pub0" => "campaign2", "page" => "1"}
+        end
+
+        it "redirect to the index" do 
+          expect(response).to redirect_to(action: :index)
+        end
+      end
     end
   end
 
