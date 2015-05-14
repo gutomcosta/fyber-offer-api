@@ -16,7 +16,7 @@ describe SearchOffer do
     allow(hashkey_calculator).to receive(:calculate).and_return(hashkey)
     allow(offer_url).to receive(:build).and_return(url)
     allow(http_request).to receive(:request).and_return(response_data)
-    allow(response_data).to receive(:offers).and_return([double, double])
+    allow(response_data).to receive(:offers).and_return([])
   end
 
   describe "#execute" do 
@@ -59,7 +59,7 @@ describe SearchOffer do
       expect(http_request).to receive(:request).with(url)
     end
     it "builds a set of offers" do 
-      expect(Offer).to receive(:build).with(response_data)
+      expect(Offer).to receive(:build).with([])
     end
 
 
