@@ -7,18 +7,40 @@ RSpec.describe OffersController, type: :controller do
 
 
     context "about the validation" do 
-      let(:form) { double }
+      let(:form) { double(params) }
+      let(:use_case) { double }
+      
       before do 
         allow(OfferSearchForm).to receive(:new).with(params).and_return(form)
+        allow(SearchOffer).to receive(:new).and_return(use_case)
+        allow(form).to receive(:valid?)
+        allow(use_case).to receive(:execute)
+      end
+
+      after do 
+        get :search, :offers => {"uid" => "player1", "pub0" => "campaign2", "page" => "1"}
       end
 
       it "creates a form to validate the params" do 
         expect(OfferSearchForm).to receive(:new).with(params)
-        get :search, :offers => {"uid" => "player1", "pub0" => "campaign2", "page" => "1"}
       end
 
       it "validates the params" do 
         expect(form).to receive(:valid?)
+      end
+
+      context "when validation is ok" do
+        before do 
+          allow(form).to receive(:valid?).and_return(true)
+        end
+        
+        it "creates a use case with the form data" do 
+          expect(SearchOffer).to receive(:new).with(uid: "player1", pub0: "campaign2", page: "1")
+        end
+
+        it "executes the use case" do 
+          expect(use_case).to receive(:execute)
+        end
       end
     end
   end
