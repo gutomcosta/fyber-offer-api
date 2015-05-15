@@ -22,7 +22,7 @@ describe SearchOffer do
     }
   end
 
-  subject { SearchOffer.new(http_request) }
+  subject { SearchOffer.new(http_request, {}) }
 
   before do 
     allow(http_request).to receive(:request).and_return(response_data)
@@ -36,7 +36,7 @@ describe SearchOffer do
       it "raises an ArgumentError if the data empty" do 
         expect { subject.execute({}) }.to raise_error ArgumentError
       end
-
+ 
       it "raises an ArgumentError if the data is nil" do 
         expect { subject.execute(nil) }.to raise_error ArgumentError
       end
@@ -53,7 +53,7 @@ describe SearchOffer do
     end
 
     it "builds the offer params to request" do 
-      expect(OfferParam).to receive(:new).with(valid_data)
+      expect(OfferParam).to receive(:new).with(valid_data, {})
     end
 
     it "makes an http request" do 

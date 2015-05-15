@@ -2,8 +2,9 @@ class OfferParam
 
   attr_reader :request_params
 
-  def initialize(params)
+  def initialize(params, api_config)
     @request_params  = params
+    @api_config      = api_config
     build_request_params
   end
 
@@ -19,18 +20,8 @@ class OfferParam
 
   def build_request_params
     #TODO it should be moved to a config file
-    @api_key         = "b07a12df7d52e6c118e5d47d3f9e60135b109a1f"
-
-    basic_params = {
-      appid: "157",
-      format: "json",
-      device_id: "2b6f0cc904d137be2e1730235f5664094b83",
-      locale: "de",
-      ip: "109.235.143.113",
-      offer_types: "112",
-      timestamp: Time.now.to_i
-    }
-    @request_params.merge!(basic_params)
+    @api_key = @api_config.delete(:api_key)
+    @request_params.merge!(@api_config)
   end
 
   def sorted_params

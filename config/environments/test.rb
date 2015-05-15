@@ -39,4 +39,14 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+   #Offer API Configuration
+  config.offer_appid = "157"
+  config.offer_format = "json"
+  config.offer_device_id = "2b6f0cc904d137be2e1730235f5664094b83"
+  config.offer_locale = "de"
+  config.offer_ip = "109.235.143.113"
+  config.offer_offer_types = "112"
+  config.offer_api_key = "b07a12df7d52e6c118e5d47d3f9e60135b109a1f"
+  config.offer_url = "http://api.sponsorpay.com/feed/v1/offers.json?"
 end
