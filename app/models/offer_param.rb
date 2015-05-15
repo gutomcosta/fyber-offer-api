@@ -1,6 +1,41 @@
 class OfferParam
 
+  attr_reader :request_params
+
   def initialize(params)
-    @params = params
+    @request_params  = params
+    build_request_params
+  end
+
+  def build
+    params = concatenate(sorted_params)
+    
+  end
+
+  private
+
+  def build_request_params
+    #TODO it should be moved to a config file
+    @api_key         = "b07a12df7d52e6c118e5d47d3f9e60135b109a1f"
+
+    basic_params = {
+      appid: "157",
+      format: "json",
+      device_id: "2b6f0cc904d137be2e1730235f5664094b83",
+      locale: "de",
+      ip: "109.235.143.113",
+      offer_types: "112"
+    }
+    @request_params.merge!(basic_params)
+  end
+
+  def sorted_params
+    Hash[@request_params.sort]
+  end
+
+  def concatenate(sorted_values)
+    sorted_values
+    .map{|value| value.join("=")}
+    .join("&")
   end
 end
