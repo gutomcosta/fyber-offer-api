@@ -18,7 +18,7 @@ RSpec.describe OffersController, type: :controller do
       end
 
       after do 
-        get :search, :offers => {"uid" => "player1", "pub0" => "campaign2", "page" => "1"}
+        xhr :get, :search, :offers => {"uid" => "player1", "pub0" => "campaign2", "page" => "1"}
       end
 
       it "creates a form to validate the params" do 

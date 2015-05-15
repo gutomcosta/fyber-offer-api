@@ -7,18 +7,19 @@
         <%= content_tag :div, msg, id: "flash_#{name}" %>
       <% end %>
     <% end %>
-    <%= form_tag offers_search_path, method: 'get' do  %>
+
+    <%= form_tag offers_search_path, method: 'get', remote: true do  %>
       <p>
         <%= label_tag "UID"%>
-        <%= text_field_tag "uid" %>
+        <%= text_field_tag "offers[uid]" %>
       </p>
       <p>
         <%= label_tag "Pub0"%>
-        <%= text_field_tag "pub0" %>
+        <%= text_field_tag "offers[pub0]" %>
       </p>
       <p>
         <%= label_tag "Page"%>
-        <%= text_field_tag "page" %>
+        <%= text_field_tag "offers[page]" %>
       </p>
       <%= submit_tag "Get offers" %>
     <% end %>

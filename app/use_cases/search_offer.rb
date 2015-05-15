@@ -1,5 +1,9 @@
 class SearchOffer
 
+  def self.build
+    SearchOffer.new(HttpRequest.new)
+  end
+
   def initialize(http_request)
     @http_request   = http_request
   end
