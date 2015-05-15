@@ -1,28 +1,96 @@
-== README
+# Fyber Offer API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple rails app that consumes Fyber Offer API.
 
-Things you may want to cover:
+Live demo on Heroku: http://protected-cove-9472.herokuapp.com/
+  
 
-* Ruby version
+# Clone and run
 
-* System dependencies
+```sh
+git clone https://github.com/gutomcosta/fyber-offer-api.git
+```
 
-* Configuration
+```sh
+bundle install
+```
 
-* Database creation
+```sh
+rails s
+```
 
-* Database initialization
+Go to localhost:3000
 
-* How to run the test suite
+### API Configuration
 
-* Services (job queues, cache servers, search engines, etc.)
+All the configuration used to access the api are on the environment files.
+I decided to put this configuration in these files, because of rails convention. With this is possible to have different configurations for each environment settings. For this case, the configurations are the same for all environments.
 
-* Deployment instructions
+Example:
 
-* ...
+```ruby
+  config.offer_appid 
+  config.offer_format
+  config.offer_device_id
+  config.offer_locale
+  config.offer_ip
+  config.offer_offer_types 
+  config.offer_api_key
+  config.offer_url
+```
+
+# General overview of my approach
+
+I used an outside in approach to develop this application. I tried to keep all features more end-to-end as possible. I like to use the [Walking Skeleton](http://alistair.cockburn.us/Walking+skeleton) for this.
+For the test approach, I used a mix of BDD and TDD cycles. I'm big fan of mock objects, and during my TDD cycle, I used the mocks to discovery the messages that objects send each other.
+
+#### Rails app
+
+To abstract the request parameters, I used a Form Object. With this, is possible to validate the params, and give the necessary semantic for the request params.
+
+```ruby
+@form = OfferSearchForm.new(params[:offers])
+if @form.valid? 
+    ....
+```
+
+Another important concept that I used, is the Use Case. My controller doesn't know anything about the business logic. It's encapsulated in the Use Case Object.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+```ruby
+ use_case = SearchOffer.build(load_offer_api_config, offer_url)
+ @offers = use_case.execute({
+     uid: @form.uid, 
+     pub0: @form.pub0, 
+     page: @form.page
+ })
+```
+I modeled an Offer as a Rails Model.
+To manipulate the API request Params, I used an OfferParam. It's a value object, that is responsible to all Offer API params manipulation logic.
+
+For example:
+* sort the params in alphabetical order
+* concatenate with the API key
+* gets a hashkey
+* build the request params correct
+
+```ruby
+class OfferParam
+
+  def build
+    params             = concatenate(sorted_params)
+    params_to_hashkey  = with_api_key(params.clone)
+    hashkey            = Hashkey.new(params_to_hashkey)
+    value = with_hashkey(params,hashkey.get)
+    value
+  end
+````
+The Hashkey object, encapsulates the hashkey generation.
+
+#### Todo
+
+* write functional tests with capybara and selenium
+* add an ajax loading on request
+* improve error handling and log
+
+
