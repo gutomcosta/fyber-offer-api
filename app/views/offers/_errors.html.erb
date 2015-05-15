@@ -1,0 +1,14 @@
+<div id="error_messages">
+  <%if @form.errors.any? %>
+    <div class="panel panel-danger">
+      <div class="panel-heading"><%= pluralize(@form.errors.count, "error") %> errors found:</div>
+      <div class="panel-body">
+        <ul>
+        <% @form.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,3 +1,9 @@
-
 $("#list").remove();
+$("#error_messages").remove();
+<% if @form.errors.any? %>
+  $("<%= escape_javascript(render 'errors' ) %>").appendTo("#errors");
+<% else %>
+
+<% end %>
+
 $("<%= escape_javascript(render 'search' ) %>").appendTo("#results");

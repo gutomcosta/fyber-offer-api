@@ -11,6 +11,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'active_attr', '~> 0.8.5'
 gem 'httpclient', '~> 2.6.0.1'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
 
 gem 'rails_12factor', group: :production
 
@@ -24,6 +26,7 @@ gem 'rails_12factor', group: :production
 # gem 'capistrano-rails', group: :development
 
 group :development do
+  gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
