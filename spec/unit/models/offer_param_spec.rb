@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe OfferParam do
   let(:valid_data) { {uid: "player1", pub0: "campaign2", page: "1"} }
-  let(:concatenated) {"appid=157&device_id=2b6f0cc904d137be2e1730235f5664094b83&format=json&ip=109.235.143.113&locale=de&offer_types=112&page=1&pub0=campaign2&uid=player1"}
+  let(:concatenated) {"appid=157&device_id=2b6f0cc904d137be2e1730235f5664094b83&format=json&ip=109.235.143.113&locale=de&offer_types=112&page=1&pub0=campaign2&timestamp=1431659105&uid=player1"}
   let(:with_api_key) { concatenated.concat("&").concat("b07a12df7d52e6c118e5d47d3f9e60135b109a1f") }
   let(:sorted_params) do 
     {
@@ -14,7 +14,8 @@ describe OfferParam do
       offer_types:"112",
       page:"1",
       pub0:"campaign2",
-      uid:"player1"
+      timestamp: "1431659105",
+      uid:"player1",
     }
   end
 
@@ -26,7 +27,7 @@ describe OfferParam do
   end
 
   before do 
-
+    allow(Time).to receive(:now).and_return(1431659105)
   end
 
   describe "#initialize" do 

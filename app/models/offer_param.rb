@@ -27,7 +27,8 @@ class OfferParam
       device_id: "2b6f0cc904d137be2e1730235f5664094b83",
       locale: "de",
       ip: "109.235.143.113",
-      offer_types: "112"
+      offer_types: "112",
+      timestamp: Time.now.to_i
     }
     @request_params.merge!(basic_params)
   end
