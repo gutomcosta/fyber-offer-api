@@ -3,20 +3,20 @@
     <%if @offers.empty? %>
       <h3>No offers available</h3>
     <% else %>
-      <h1>List Offers</h1>
+      <h1>Offers list</h1>
        
-      <table>
+      <table class="table table-bordered table-striped">
         <tr>
           <th>Title</th>
-          <th>Thumbnail</th>
-          <th>Payout</th>
+          <th class="column-center">Thumbnail</th>
+          <th class="column-center">Payout</th>
         </tr>
        
       <% @offers.each do |offer| %>
         <tr>
-          <td><%= offer.title %></td>
-          <td><%= image_tag(offer.thumbnail) %></td>
-          <td><%= offer.payout %></td>
+          <td class="vertical-align"><%= offer.title %></td>
+          <td class="vertical-align column-center"><%= image_tag(offer.thumbnail) %></td>
+          <td class="vertical-align column-center"><%= offer.payout %></td>
         </tr>
       <% end %>
       </table>

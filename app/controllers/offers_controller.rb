@@ -6,20 +6,27 @@ class OffersController < ApplicationController
   end
 
   def search
-    form = OfferSearchForm.new(params[:offers])
-    if form.valid? 
+    @form = OfferSearchForm.new(params[:offers])
+    if @form.valid? 
       begin
         use_case = SearchOffer.build(load_offer_api_config, offer_url)
-        @offers = use_case.execute({uid: form.uid, pub0: form.pub0, page: form.page})
+        @offers = use_case.execute({uid: @form.uid, pub0: @form.pub0, page: @form.page})
         respond_to do |format|
           format.js {}
           format.json { render json: @offers, status: :created }
         end
       rescue InvalidResponseToOfferAPI => e
-        render :json => {:errors => "Invalid Signature!"}
+        @form.errors[:signature] = "is invalid!"
+        respond_to do |format|
+          format.js
+        end
+        
       end
     else
-      redirect_to root_url
+      respond_to do |format|
+        format.js {}
+        format.json { render json: @offers, status: :created }
+      end
     end
   end
 
