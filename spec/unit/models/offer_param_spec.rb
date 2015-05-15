@@ -61,6 +61,15 @@ describe OfferParam do
       expect(hashkey).to receive(:get).and_return("b07a12df7d52e6c118e5d47d3f9e60135b109a1f")
     end
 
+    it "generates the request params with hashkey" do 
+      hashkey = double
+      allow(Hashkey).to receive(:new).and_return(hashkey)
+      allow(hashkey).to receive(:get).and_return("7a2b1604c03d46eec1ecd4a686787b75dd693c4d")
+
+      request_params = concatenated.concat("&hashkey=7a2b1604c03d46eec1ecd4a686787b75dd693c4d")
+      expect(subject.build).to eq request_params  
+
+    end
   end
 
 

@@ -9,9 +9,10 @@ class OfferParam
 
   def build
     params             = concatenate(sorted_params)
-    params_to_hashkey  = with_api_key(params)
+    params_to_hashkey  = with_api_key(params.clone)
     hashkey            = Hashkey.new(params_to_hashkey)
-    with_hashkey(params,hashkey.get)
+    value = with_hashkey(params,hashkey.get)
+    value
   end
 
   private
@@ -46,8 +47,9 @@ class OfferParam
     concat_with(params, @api_key)
   end
 
-  def with_hashkey(params,hahskey_value)
-    concat_with(params,hahskey_value)
+  def with_hashkey(params,hashkey_value)
+    other = "hashkey=".concat(hashkey_value)
+    concat_with(params,other)
   end
 
   def concat_with(params,other)
