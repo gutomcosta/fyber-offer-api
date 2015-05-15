@@ -11,21 +11,8 @@ class OffersController < ApplicationController
       begin
         use_case = SearchOffer.build(load_offer_api_config, offer_url)
         @offers = use_case.execute({uid: @form.uid, pub0: @form.pub0, page: @form.page})
-        respond_to do |format|
-          format.js {}
-          format.json { render json: @offers, status: :created }
-        end
       rescue InvalidResponseToOfferAPI => e
         @form.errors[:signature] = "is invalid!"
-        respond_to do |format|
-          format.js
-        end
-        
-      end
-    else
-      respond_to do |format|
-        format.js {}
-        format.json { render json: @offers, status: :created }
       end
     end
   end
