@@ -8,7 +8,7 @@ class SearchOffer
     raise ArgumentError, "missing search data" unless data_exists?(data) && is_valid?(data)
     param    = OfferParam.new(data)
     response = @http_request.request(param.build)
-    Offer.build(response.offers)
+    Offer.build(response)
   end
 
   private 

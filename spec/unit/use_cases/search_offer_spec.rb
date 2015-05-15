@@ -2,10 +2,9 @@ require 'rails_helper'
 
 describe SearchOffer do
   let(:valid_data) { {uid: "player1", pub0: "campaign2", page: "1"} }
-  let(:response_data) { double }
   let(:http_request) { double }
   let(:offer_param) { double }
-  let(:offers) do 
+  let(:response_data) do 
     { "offers" =>
       [
         {
@@ -27,7 +26,6 @@ describe SearchOffer do
 
   before do 
     allow(http_request).to receive(:request).and_return(response_data)
-    allow(response_data).to receive(:offers).and_return(offers)
     allow(OfferParam).to receive(:new).and_return(offer_param)
     allow(offer_param).to receive(:build)
   end
@@ -62,7 +60,7 @@ describe SearchOffer do
       expect(http_request).to receive(:request)
     end
     it "builds a set of offers" do 
-      expect(Offer).to receive(:build).with(offers)
+      expect(Offer).to receive(:build).with(response_data)
     end
 
 
