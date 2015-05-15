@@ -2,6 +2,7 @@ class Offer
   attr_reader :title, :thumbnail, :payout
 
   def self.build(data)
+    return [] unless data.has_key?("offers")
     offers    = data["offers"]
     thumbnail = ""
     offers.map do |offer|
