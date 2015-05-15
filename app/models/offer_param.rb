@@ -8,8 +8,10 @@ class OfferParam
   end
 
   def build
-    params = concatenate(sorted_params)
-    
+    params             = concatenate(sorted_params)
+    params_to_hashkey  = with_api_key(params)
+    hashkey            = Hashkey.new(params_to_hashkey)
+    with_hashkey(params,hashkey.get)
   end
 
   private
@@ -34,8 +36,23 @@ class OfferParam
   end
 
   def concatenate(sorted_values)
+    return "" if sorted_values.nil?
     sorted_values
     .map{|value| value.join("=")}
     .join("&")
+  end
+
+  def with_api_key(params)
+    concat_with(params, @api_key)
+  end
+
+  def with_hashkey(params,hahskey_value)
+    concat_with(params,hahskey_value)
+  end
+
+  def concat_with(params,other)
+    params
+      .concat("&")
+      .concat(other)
   end
 end
