@@ -1,17 +1,14 @@
 class SearchOffer
 
-  def initialize(offer_url, http_request)
-    @offer_url      = offer_url
+  def initialize(http_request)
     @http_request   = http_request
   end
 
   def execute(data)
     raise ArgumentError, "missing search data" unless data_exists?(data) && is_valid?(data)
     param    = OfferParam.new(data)
-    url      = @offer_url.build(param.build)
-    response = @http_request.request(url)
+    response = @http_request.request(param.build)
     Offer.build(response.offers)
-
   end
 
   private 
